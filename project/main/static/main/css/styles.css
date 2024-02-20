@@ -1,0 +1,79 @@
+html, body {margin: 0; height: 100%; overflow: hidden; background-color: seashell}
+
+.register-forms{
+    position: relative;
+    width: 60%;
+    height: 80%;
+    margin: 5% 0 0 20%;
+    text-align: center;
+    background-color: white;
+    border: none;
+    box-shadow: 1px 1px 5px 5px lightgrey;
+    border-radius: 15px;
+}
+
+.header-content{
+    display:block;
+    width:100%;
+    height:130px;
+}
+
+.button-header{
+    border-radius: 10px;
+    float: right;
+    margin: 5% 5% 0 0;
+}
+
+.main-content{
+    display:flex;
+    margin: 3% 0 0 0;
+    flex-direction: row;
+    height:400px;
+}
+
+.main-content-text{
+    float:left;
+    margin: 3% 0 0 16%;
+    font-weight: bold;
+    font-size: 33px;
+    font: Roboto;
+}
+
+.left-column-main{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.register-button{
+    margin: 20% 0 0 20%;
+}
+
+.images{
+    width: 45%;
+    height: 400px;
+    margin: 0 0 0 30%;
+}
+
+.foot-content{
+    display: flex;
+    align-content: flex-end;
+    justify-content: space-evenly;
+}
+
+.link-for-contacts{
+    margin: 0 10px 0 10px;
+}
+.link-for-team{
+    margin: 0 10px 0 10px;
+}
+.register-user{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.form-input{
+    margin: 0px 10px 0px 10px;
+    width: 30%;
+}

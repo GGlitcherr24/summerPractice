@@ -1,0 +1,158 @@
+html, body {margin: 0; height: 100%; overflow: auto}
+
+.header{
+    background-color: black;
+    position: sticky;
+    height: 50px;
+}
+.header-link{
+    text-decoration: none;
+    color: white;
+}
+.header-link:hover{
+    font-size: 1.05rem;
+}
+.header-ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
+.header-li{
+    height:50px;
+    width: 100px;
+    padding: 10px 0 0 0;
+    border-right: 1px solid white;
+    margin: 0 40px 0 0;
+    text-decoration: none;
+}
+.header-li-long{
+    height:50px;
+    width: 150px;
+    padding: 10px 0 0 0;
+    border-right: 1px solid white;
+    margin: 0 60px 0 0;
+    text-decoration: none;
+}
+.logout{
+    margin-left: auto;
+    margin-right: 0;
+}
+.last_li{
+    width: 150px;
+    border-left: 1px solid white;
+    padding: 10px 20px 0 0;
+    padding-left: 15px;
+    margin: 0 0 0 0;
+}
+.sidebar{
+    background-color: DimGray;
+    float: left;
+    width: 15%;
+    min-height: 100vh;
+    box-shadow: 5px 0px 8px red;
+}
+.sidebar-ul{
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    padding: 0;
+
+}
+
+.sidebar-li{
+    margin: 30px 0 0 50px;
+    font-size: 25px;
+}
+
+.sidebar-link{
+    text-decoration: none;
+    color: white;
+}
+.main-content{
+    padding-left: 20px;
+}
+.button-read-content{
+    float: right;
+    display: block;
+}
+.ul-content{
+    list-style-type: none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 20px;
+}
+.clear{
+    min-width:100vh;
+    height:55px;
+    display:grid;
+}
+.content-li{
+    min-height:400px;
+    margin: 20px 0 0 0;
+}
+.selected{
+    color: blue;
+}
+.article-panel{
+    background-color: lightgrey;
+    font-size: 14px;
+    font-weight: bold;
+}
+.img-posts-left{
+    width: 350px;
+    height:300px;
+    float:left;
+    margin-right: 20px;
+}
+.img-one-posts-left{
+    display: block;
+    width: 380px;
+    height:350px;
+    float:left;
+    margin-right: 20px;
+}
+.name-post{
+    padding: 0 0 20px 0;
+    font-size: 40px;
+}
+.form-label-add{
+    margin: 0px 10px 0px 10px;
+    width: 15%;
+    float: inline-start;
+
+}
+.form-anket{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin: 0 0 20px 0;
+}
+.p-ankets{
+    padding: 10px 0 0 0;
+}
+.add-anket-text{
+    padding: 0 0 15px 0;
+}
+.center-team{
+    position:relative;
+    display: inline-block;
+    vertical-align: top;
+    left: 40%;
+    font-weight:700;
+    font-size: 20px;
+    margin: 20px 0 20px 0;
+    width: auto;
+}
+.text-team{
+    font-size: 18px;
+}
+.contacts-text{
+    margin: 20px 0 20px 0;
+    font-weight:700;
+    font-size: 20px;
+}
+u{
+    text-decoration: none;
+    color: blue;
+}
