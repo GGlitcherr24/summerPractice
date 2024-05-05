@@ -1,0 +1,2 @@
+Модер: username: moderator, password: moderGG123
+Админ: username: administrator, password: superAdmin123

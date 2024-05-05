@@ -65,6 +65,45 @@
 {% block content %}
     <div class = "main-content">
          <ul class = "ul-content">
+             <div class="dropdown">
+                  <button class="dropbtn">Выберите возраст</button>
+                  <div class="dropdown-content">
+                      {% if age == 18 %}
+                        <a class="selected-age" href="{{18}}">До 18 лет</a>
+                      {% else %}
+                        <a href="{{18}}">До 18 лет</a>
+                      {% endif %}
+                      {% if age == 25 %}
+                        <a class="selected-age" href="{{25}}">18-25 лет</a>
+                      {% else %}
+                        <a href="{{25}}">18-25 лет</a>
+                      {% endif %}
+                      {% if age == 35 %}
+                        <a class="selected-age" href="{{35}}">26-35 лет</a>
+                      {% else %}
+                        <a href="{{35}}">26-35 лет</a>
+                      {% endif %}
+                      {% if age == 50 %}
+                        <a class="selected-age" href="{{50}}">36-50 лет</a>
+                      {% else %}
+                        <a href="{{50}}">36-50 лет</a>
+                      {% endif %}
+                      {% if age == 51 %}
+                        <a class="selected-age" href="{{51}}">От 50 лет</a>
+                      {% else %}
+                        <a href="{{51}}">От 50 лет</a>
+                      {% endif %}
+                  </div>
+             </div>
+             {% if user.username == 'root' or user.username == 'moderator' %}
+                <form action="{% url 'find_bad_content' %}" method="post">
+                    {% csrf_token %}
+                 <div class="search-bar">
+                    <input type="text" name="search_input" class="search-input" placeholder="Поиск неудовлетворительного контента..">
+                        <button class="search-button">Найти</button>
+                 </div>
+                </form>
+             {% endif %}
             {% for p in posts %}
 
                 <li class= "content-li"> <div class = "article-panel">

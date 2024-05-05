@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 from django.contrib.auth.models import User
 
-
+#Класс для отображения бд людей в админке
 class PersonAdmin(admin.ModelAdmin):
     p = User.objects.all()
     list_display = ('id', 'first_name', 'last_name', 'photo', 'is_published')
@@ -11,7 +11,7 @@ class PersonAdmin(admin.ModelAdmin):
     list_filter = ('is_published',)
     prepopulated_fields = {"slug": ("first_name", "last_name")}
 
-
+#Класс для отображения бд пола в админке
 class GenderAdmin(admin.ModelAdmin):
     list_display = ('id', 'gender')
     list_display_links = ('id', 'gender')

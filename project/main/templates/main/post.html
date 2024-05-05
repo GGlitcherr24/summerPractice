@@ -77,6 +77,11 @@
         {{post.content|linebreaks}}
           <p> Контакты для связи: <u> {{post.contacts}}</u></p>
         <div class = "clear"></div>
+          {% if user.username == 'root' or user.username == 'moderator' or user.username == 'administrator'%}
+          <a href = "{{post.slug}}">
+              <button type="button" class="btn btn-primary btn-delete"  >Удалить анкету </button>
+          </a>
+          {% endif %}
       </ul>
 
     </div>

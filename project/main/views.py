@@ -15,6 +15,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
 
+# Первых заход на сайт, если авторизирован на главную, если нет то на страницу регистрации и никуда больше
 def index(request):
     posts = Person.objects.all()
     if request.user.is_authenticated:
@@ -23,6 +24,7 @@ def index(request):
         return render(request, 'main/index.html')
 
 
+# Переход на главную страницу
 def main(request):
     posts = Person.objects.all()
     gender = Gender.objects.all()
@@ -42,6 +44,7 @@ def main(request):
     return render(request, 'main/main.html', context=context)
 
 
+# Ошибка при неправильной ссылке
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1> Страница не найдена </h1>')
 
@@ -49,6 +52,7 @@ def pageNotFound(request, exception):
 # def show_post(request, post_id):
 #    return
 
+# Переход на страницу регистрации
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = 'main/register.html'
@@ -65,6 +69,7 @@ class RegisterUser(CreateView):
         return redirect('main')
 
 
+# Переход на страницу авторизации
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'main/login.html'
@@ -73,11 +78,13 @@ class LoginUser(LoginView):
         return reverse_lazy('main')
 
 
+# Выход из аккаунта
 def Logout_User(request):
     logout(request)
     return redirect('login')
 
 
+# Отображение всех анкет
 def show_post(request, post_slug):
     post = get_object_or_404(Person, slug=post_slug)
     gender = Gender.objects.all()
@@ -91,6 +98,40 @@ def show_post(request, post_slug):
     return render(request, 'main/post.html', context=context)
 
 
+# Фильтр по возрасту
+def show_age(request, age, gender_id=None):
+    age_control = []
+    match age:
+        case 18:
+            age_control = [int(i) for i in range(18)]
+        case 25:
+            age_control = [int(i) for i in range(18, 26)]
+        case 35:
+            age_control = [int(i) for i in range(26, 36)]
+        case 50:
+            age_control = [int(i) for i in range(36, 51)]
+
+    gender = Gender.objects.all()
+    if gender_id is not None:
+        posts = Person.objects.filter(age__in=age_control) & Person.objects.filter(gender_id=gender_id)
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'gender_selected': gender_id,
+            'age': age,
+        }
+    else:
+        posts = Person.objects.filter(age__in=age_control) & Person.objects.filter(age__lte=20)
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'age': age,
+        }
+
+    return render(request, 'main/main.html', context=context)
+
+
+# Фильтр по гендеру
 def show_gender(request, gender_id):
     posts = Person.objects.filter(gender_id=gender_id)
     gender = Gender.objects.all()
@@ -104,12 +145,13 @@ def show_gender(request, gender_id):
     return render(request, 'main/main.html', context=context)
 
 
+# Добавление анкеты
 def addpage(request):
     user = User.objects.all()
     gender = Gender.objects.all()
     for p in user:
         is_have_anket = Person.objects.filter(slug_post_one=p.username)
-    if(len(is_have_anket) > 0):
+    if (len(is_have_anket) > 0):
         context = {
             'gender': gender,
             'is_have_anket': True
@@ -133,6 +175,7 @@ def addpage(request):
         return render(request, 'main/addpage.html', context=context)
 
 
+# Просмотр своей анекты
 def my_anket(request):
     print(User.username)
     posts = Person.objects.all()
@@ -144,18 +187,60 @@ def my_anket(request):
     }
     return render(request, 'main/my_anket.html', context=context)
 
+
+# Удаление анкеты
 def delete_anket(request):
     user = User.objects.all()
     for p in user:
         posts = Person.objects.filter(slug_post_one=p.username)
-    if(len(posts)>0):
+    if (len(posts) > 0):
         posts.delete()
     else:
         print("нету записей")
     return main(request)
 
+
+# Переход на страницу информации о команде
 def team(request):
+    print("ЗАХОД")
     return render(request, 'main/team.html')
 
+
+# Переход на страницу информации о контактах разработчиков
 def contacts(request):
-    return render(request,'main/contacts.html')
+    return render(request, 'main/contacts.html')
+
+
+def find_bad_content(request):
+    if request.method == 'POST':
+        search = request.POST.get('search_input')
+        person = Person.objects.all()
+        for p in person:
+            posts = Person.objects.filter(content__icontains=search)
+        gender = Gender.objects.all()
+        context = {
+            'posts': posts,
+            'gender': gender,
+        }
+
+    return render(request, 'main/main.html', context=context)
+
+def admin_delete_account(request, post_slug, slug_post_one):
+    try:
+        anket = Person.objects.get(slug_post_one=slug_post_one)
+        user = User.objects.get(username=slug_post_one)
+        anket.delete()
+        user.delete()
+    except User.DoesNotExist:
+        print("Пользователь не найден")
+
+    posts = Person.objects.all()
+    gender = Gender.objects.all()
+
+    context = {
+        'posts': posts,
+        'gender': gender,
+        'gender_selected': 0,
+        # 'page_obj': page_obj,
+    }
+    return render(request, 'main/main.html', context=context)

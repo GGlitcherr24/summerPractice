@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.base_user import AbstractBaseUser
 
 
+# Создания базы данных пользователей
 class Person(models.Model):
     first_name = models.CharField(max_length=30, verbose_name="Имя")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
@@ -26,7 +27,7 @@ class Person(models.Model):
     class Meta:
         ordering = ['-id']
 
-
+# Создания базы данных пола и связи ее с таблицей пользователя
 class Gender(models.Model):
     gender = models.CharField(max_length=10, db_index=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
@@ -36,5 +37,3 @@ class Gender(models.Model):
 
     def get_absolute_url(self):
         return reverse('gender', kwargs={'gender_id': self.pk})
-
-
