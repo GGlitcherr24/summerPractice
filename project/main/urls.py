@@ -18,5 +18,7 @@ urlpatterns = [
     path('team', team, name='team'),
     path('contacts', contacts, name='contacts'),
     path('main/search', find_bad_content, name='find_bad_content'),
-    path('post/<slug:post_slug>/<slug:slug_post_one>', admin_delete_account, name='admin_delete_account')
+    path('post/<slug:post_slug>/<slug:slug_post_one>', admin_delete_account, name='admin_delete_account'),
+    path('quesiton', question_for_admin, name='question_for_admin'),
+    path('question/submit', send_question, name='send_question')
 ]

@@ -26,6 +26,9 @@
                 <li class = "header-li-long">
                    <a class = "header-link" href = "{% url 'my_anket' %}">Моя анкета</a>
                 </li>
+                <li class = "header-li-long">
+                   <a class = "header-link" href = "{% url 'question_for_admin' %}">Задать вопрос</a>
+                </li>
                 {% if request.user.is_authenticated %}
                         <li class = "header-li logout">
                             <a class = "header-link" href="{% url 'logout' %}"> Выйти </a>

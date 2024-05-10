@@ -13,7 +13,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
-
+from django.core.mail import send_mail
 
 # Первых заход на сайт, если авторизирован на главную, если нет то на страницу регистрации и никуда больше
 def index(request):
@@ -202,7 +202,6 @@ def delete_anket(request):
 
 # Переход на страницу информации о команде
 def team(request):
-    print("ЗАХОД")
     return render(request, 'main/team.html')
 
 
@@ -211,6 +210,7 @@ def contacts(request):
     return render(request, 'main/contacts.html')
 
 
+# Поиск по словам для модератора
 def find_bad_content(request):
     if request.method == 'POST':
         search = request.POST.get('search_input')
@@ -225,6 +225,8 @@ def find_bad_content(request):
 
     return render(request, 'main/main.html', context=context)
 
+
+# Полное удаление аккаунта модером или администратором
 def admin_delete_account(request, post_slug, slug_post_one):
     try:
         anket = Person.objects.get(slug_post_one=slug_post_one)
@@ -244,3 +246,36 @@ def admin_delete_account(request, post_slug, slug_post_one):
         # 'page_obj': page_obj,
     }
     return render(request, 'main/main.html', context=context)
+
+# Переход на страницу отправки вопроса
+def question_for_admin(request):
+    context = {
+        'success': 2
+    }
+    return render(request, 'main/question_for_admin.html', context=context)
+
+#Метод отправляющий вопрос
+def send_question(request):
+    recipient_list = ['dasha.belosludtseva.03@mail.ru']
+    success = 2
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        try:
+            send_mail(
+                subject=f'Новое сообщение с сайта от {name}',
+                message=f'Имя отправителя: {name} \n Email отправителя: {email} \n Сообщение:{message}',
+                from_email=email,
+                recipient_list=recipient_list,
+                fail_silently=False,
+            )
+            success = 1
+        except Exception as e:
+            print(e)
+            success = 0
+
+    context = {
+        'success': success
+    }
+    return render(request, 'main/question_for_admin.html', context=context)

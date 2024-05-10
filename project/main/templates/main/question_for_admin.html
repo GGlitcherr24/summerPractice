@@ -67,27 +67,44 @@
     </div>
 {% block content %}
     <div class = "main-content">
-      <ul class = "one-post">
-        <div class = "article-panel">
-                    <p class = "first"> Пол: {{post.gender}}<br>Возраст: {{post.age}}</p>
-        </div>
-         <h1 class = "name-post">{{post.first_name}} {{post.last_name}}</h1>
 
-        {% if post.photo %}
-        <p><img class = "img-one-posts-left" src = "{{post.photo.url}}" ></p>
+  <div class="contact-form">
+      {% if user.username != 'administrator' %}
+    <h2>Задайте вопрос администратору, и получите ответ на свою почту</h2>
+    <form action="{% url 'send_question' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Ваше имя" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Ваш email" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Сообщение</label>
+        <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-question">Отправить</button>
+    </form>
+      {% if success != 2 %}
+        {% if success == 0 %}
+            <div class="error-block">
+                <p>Не удалось отправить сообщение, свяжитесь с разработчиком лично через вкладку "Контакты" или попробуйте снова </p>
+            </div>
+        {% else %}
+            <div class="success-block">
+                <p> Ваш вопрос успешно отправлен, ожидайте ответа на почте </p>
+            </div>
         {% endif %}
-
-        {{post.content|linebreaks}}
-          <p> Контакты для связи: <u> {{post.contacts}}</u></p>
-        <div class = "clear"></div>
-          {% if user.username == 'root' or user.username == 'moderator' or user.username == 'administrator'%}
-          <a href = "{{post.slug}}">
-              <button type="button" class="btn btn-primary btn-delete"  >Удалить анкету </button>
-          </a>
-          {% endif %}
-      </ul>
-
-    </div>
+      {% endif %}
+  </div>
+        {% else %}
+        <div>
+            <h2> Проверьте вашу почту </h2>
+        </div>
+        {% endif %}
+</div>
 {% endblock %}
 </body>
 </html>
