@@ -99,6 +99,37 @@
                       {% endif %}
                   </div>
              </div>
+             <ul class = "ul-content">
+             <div class="dropdown dropdown2">
+                  <button class="dropbtn"> Фильтр по увлечениям </button>
+                  <div class="dropdown-content">
+                      {% if hobby == 'Велосипед' %}
+                        <a class="selected-age" href="{Велосипед}">Велосипед</a>
+                      {% else %}
+                        <a href="{Велосипед}">Велосипед</a>
+                      {% endif %}
+                      {% if hobby == 'Бег' %}
+                        <a class="selected-age" href="{Бег}">Бег</a>
+                      {% else %}
+                        <a href="{Бег}">Бег</a>
+                      {% endif %}
+                      {% if hobby == 'Выгул с собакой' %}
+                        <a class="selected-age" href="{Выгул с собакой}">Выгул с собакой</a>
+                      {% else %}
+                        <a href="{Выгул с собакой}">Выгул с собакой</a>
+                      {% endif %}
+                      {% if hobby == 'Мама с ребенком' %}
+                        <a class="selected-age" href="{Мама с ребенком}">Мама с ребенком</a>
+                      {% else %}
+                        <a href="{Мама с ребенком}">Мама с ребенком</a>
+                      {% endif %}
+                      {% if hobby == 'Другое' %}
+                        <a class="selected-age" href="{Другое}">Другое</a>
+                      {% else %}
+                        <a href="{Другое}">Другое</a>
+                      {% endif %}
+                  </div>
+             </div>
              {% if user.username == 'root' or user.username == 'moderator' %}
                 <form action="{% url 'find_bad_content' %}" method="post">
                     {% csrf_token %}

@@ -17,6 +17,7 @@ class Person(models.Model):
     gender = models.ForeignKey('Gender', on_delete=models.PROTECT, verbose_name="Пол")
     slug_post_one = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="Ваш логин", null=True)
     age = models.IntegerField(blank=False, verbose_name="Возраст")
+    hobby = models.CharField(max_length=255, verbose_name="Хобби", default='')
 
     def __str__(self):
         return self.first_name + " " + self.last_name

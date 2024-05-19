@@ -20,5 +20,9 @@ urlpatterns = [
     path('main/search', find_bad_content, name='find_bad_content'),
     path('post/<slug:post_slug>/<slug:slug_post_one>', admin_delete_account, name='admin_delete_account'),
     path('quesiton', question_for_admin, name='question_for_admin'),
-    path('question/submit', send_question, name='send_question')
+    path('question/submit', send_question, name='send_question'),
+    path('main/<hobby>', filter_hobby, name='filter_hobby'),
+    path('gender/<int:gender_id>/<hobby>', filter_hobby, name='filter_hobby'),
+    path('main/<int:age>/<hobby>', filter_hobby, name='filter_hobby'),
+    path('gender/<int:gender_id>/<int:age>/<hobby>', filter_hobby, name='filter_hobby')
 ]

@@ -154,9 +154,9 @@ u{
     text-decoration: none;
     color: blue;
 }
-dropdown {
-      position: relative;
-      display: inline-block;
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
@@ -254,4 +254,9 @@ label{
   box-shadow: 0px 0px 5px #000000;
   font-size: 22px;
   opacity: 0.79;
+}
+.dropdown2{
+    position: relative;
+    display: inline-block;
+    margin-left: 200px;
 }

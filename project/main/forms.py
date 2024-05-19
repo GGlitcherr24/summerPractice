@@ -6,6 +6,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user
 
+CHOICES = (
+    ('Велосипед', 'Велосипед'),
+    ('Бег', 'Бег'),
+    ('Выгул с собакой', 'Выгул с собакой'),
+    ('Мама с ребенком', 'Мама с ребенком'),
+    ('Другое', 'Другое'),
+)
 
 # Вид формы регистрации
 class RegisterUserForm(UserCreationForm):
@@ -40,12 +47,14 @@ class AddPostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['gender'].empty_label = "Пол не выбран"
+        self.fields['hobby'] = forms.ChoiceField(choices=CHOICES)
+        self.fields['hobby'].empty_label = "Другое"
 
     # Настройки для формы добавления анкеты
     class Meta:
         model = Person
 
-        fields = ['first_name', 'last_name', 'age', 'slug', 'content', 'contacts', 'photo', 'is_published', 'gender',
+        fields = ['first_name', 'last_name', 'age', 'slug', 'content', 'contacts', 'photo', 'is_published', 'gender', 'hobby',
                   'slug_post_one']
         widgets = {
             'content': forms.Textarea(attrs={'cols': 100, 'rows': 5}),

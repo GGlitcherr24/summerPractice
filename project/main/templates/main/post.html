@@ -79,9 +79,10 @@
 
         {{post.content|linebreaks}}
           <p> Контакты для связи: <u> {{post.contacts}}</u></p>
+          <p> Хобби: <u> {{post.hobby}}</u></p>
         <div class = "clear"></div>
           {% if user.username == 'root' or user.username == 'moderator' or user.username == 'administrator'%}
-          <a href = "{{post.slug}}">
+          <a href = "{{post.slug_post_one}}">
               <button type="button" class="btn btn-primary btn-delete"  >Удалить анкету </button>
           </a>
           {% endif %}

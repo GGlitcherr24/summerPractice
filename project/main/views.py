@@ -229,7 +229,7 @@ def find_bad_content(request):
 # Полное удаление аккаунта модером или администратором
 def admin_delete_account(request, post_slug, slug_post_one):
     try:
-        anket = Person.objects.get(slug_post_one=slug_post_one)
+        anket = Person.objects.get(slug=post_slug)
         user = User.objects.get(username=slug_post_one)
         anket.delete()
         user.delete()
@@ -279,3 +279,67 @@ def send_question(request):
         'success': success
     }
     return render(request, 'main/question_for_admin.html', context=context)
+
+#Фильтр по хобби
+def filter_hobby(request, hobby, gender_id=None, age=None):
+    hobby = hobby[1:-1]
+    if gender_id is not None and age is not None:
+        age_control = []
+        match age:
+            case 18:
+                age_control = [int(i) for i in range(18)]
+            case 25:
+                age_control = [int(i) for i in range(18, 26)]
+            case 35:
+                age_control = [int(i) for i in range(26, 36)]
+            case 50:
+                age_control = [int(i) for i in range(36, 51)]
+        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(gender_id=gender_id)
+        gender = Gender.objects.all()
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'gender_selected': gender_id,
+            'age': age,
+            'hobby': hobby
+        }
+    elif gender_id is not None:
+        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(gender_id=gender_id)
+        gender = Gender.objects.all()
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'gender_selected': gender_id,
+            'hobby': hobby
+        }
+    elif age is not None:
+        age_control = []
+        match age:
+            case 18:
+                age_control = [int(i) for i in range(18)]
+            case 25:
+                age_control = [int(i) for i in range(18, 26)]
+            case 35:
+                age_control = [int(i) for i in range(26, 36)]
+            case 50:
+                age_control = [int(i) for i in range(36, 51)]
+
+        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(age__lte=20)
+        gender = Gender.objects.all()
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'gender_selected': 0,
+            'age': age,
+            'hobby': hobby
+        }
+    else:
+        posts = Person.objects.filter(hobby=hobby)
+        gender = Gender.objects.all()
+        context = {
+            'posts': posts,
+            'gender': gender,
+            'gender_selected': 0,
+            'hobby': hobby
+        }
+    return render(request, 'main/main.html', context=context)
