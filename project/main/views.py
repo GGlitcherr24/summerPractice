@@ -121,10 +121,11 @@ def show_age(request, age, gender_id=None):
             'age': age,
         }
     else:
-        posts = Person.objects.filter(age__in=age_control) & Person.objects.filter(age__lte=20)
+        posts = Person.objects.filter(age__in=age_control)
         context = {
             'posts': posts,
             'gender': gender,
+            'gender_selected': 0,
             'age': age,
         }
 
@@ -281,65 +282,79 @@ def send_question(request):
     return render(request, 'main/question_for_admin.html', context=context)
 
 #Фильтр по хобби
-def filter_hobby(request, hobby, gender_id=None, age=None):
+def filter_hobby(request, hobby):
     hobby = hobby[1:-1]
-    if gender_id is not None and age is not None:
-        age_control = []
-        match age:
-            case 18:
-                age_control = [int(i) for i in range(18)]
-            case 25:
-                age_control = [int(i) for i in range(18, 26)]
-            case 35:
-                age_control = [int(i) for i in range(26, 36)]
-            case 50:
-                age_control = [int(i) for i in range(36, 51)]
-        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(gender_id=gender_id)
-        gender = Gender.objects.all()
-        context = {
-            'posts': posts,
-            'gender': gender,
-            'gender_selected': gender_id,
-            'age': age,
-            'hobby': hobby
-        }
-    elif gender_id is not None:
-        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(gender_id=gender_id)
-        gender = Gender.objects.all()
-        context = {
-            'posts': posts,
-            'gender': gender,
-            'gender_selected': gender_id,
-            'hobby': hobby
-        }
-    elif age is not None:
-        age_control = []
-        match age:
-            case 18:
-                age_control = [int(i) for i in range(18)]
-            case 25:
-                age_control = [int(i) for i in range(18, 26)]
-            case 35:
-                age_control = [int(i) for i in range(26, 36)]
-            case 50:
-                age_control = [int(i) for i in range(36, 51)]
+    posts = Person.objects.filter(hobby=hobby)
+    gender = Gender.objects.all()
+    context = {
+        'posts': posts,
+        'gender': gender,
+        'gender_selected': 0,
+        'hobby': hobby
+    }
+    return render(request, 'main/main.html', context=context)
 
-        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(age__lte=20)
-        gender = Gender.objects.all()
-        context = {
-            'posts': posts,
-            'gender': gender,
-            'gender_selected': 0,
-            'age': age,
-            'hobby': hobby
-        }
+def filter_hobby_and_gender_id(request, gender_id, hobby):
+    hobby = hobby[1:-1]
+    print(gender_id, hobby)
+    posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(gender_id=gender_id)
+    gender = Gender.objects.all()
+    context = {
+        'posts': posts,
+        'gender': gender,
+        'gender_selected': gender_id,
+        'hobby': hobby
+    }
+    return render(request, 'main/main.html', context=context)
+
+def filter_hobby_and_age(request, age, hobby):
+    print(hobby, age)
+    age_control = []
+    match age:
+        case 18:
+            age_control = [int(i) for i in range(18)]
+        case 25:
+            age_control = [int(i) for i in range(18, 26)]
+        case 35:
+            age_control = [int(i) for i in range(26, 36)]
+        case 50:
+            age_control = [int(i) for i in range(36, 51)]
+
+    posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(
+        age__lte=20)
+    gender = Gender.objects.all()
+    context = {
+        'posts': posts,
+        'gender': gender,
+        'gender_selected': 0,
+        'age': age,
+        'hobby': hobby
+    }
+    return render(request, 'main/main.html', context=context)
+
+def filter_hobby_age_gender(request, gender_id, age, hobby):
+    print(hobby, gender_id, age)
+    age_control = []
+    match age:
+        case 18:
+            age_control = [int(i) for i in range(18)]
+        case 25:
+            age_control = [int(i) for i in range(18, 26)]
+        case 35:
+            age_control = [int(i) for i in range(26, 36)]
+        case 50:
+            age_control = [int(i) for i in range(36, 51)]
+    if gender_id != 0:
+        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control) & Person.objects.filter(
+            gender_id=gender_id)
     else:
-        posts = Person.objects.filter(hobby=hobby)
-        gender = Gender.objects.all()
-        context = {
-            'posts': posts,
-            'gender': gender,
-            'gender_selected': 0,
-            'hobby': hobby
-        }
+        posts = Person.objects.filter(hobby=hobby) & Person.objects.filter(age__in=age_control)
+    gender = Gender.objects.all()
+    context = {
+        'posts': posts,
+        'gender': gender,
+        'gender_selected': gender_id,
+        'age': age,
+        'hobby': hobby
+    }
     return render(request, 'main/main.html', context=context)

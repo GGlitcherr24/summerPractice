@@ -99,37 +99,66 @@
                       {% endif %}
                   </div>
              </div>
-             <ul class = "ul-content">
-             <div class="dropdown dropdown2">
+             <div class="dropdown">
                   <button class="dropbtn"> Фильтр по увлечениям </button>
                   <div class="dropdown-content">
-                      {% if hobby == 'Велосипед' %}
-                        <a class="selected-age" href="{Велосипед}">Велосипед</a>
+                      {% if not age %}
+                          {% if hobby == 'Велосипед' %}
+                            <a class="selected-age" href="{Велосипед}">Велосипед</a>
+                          {% else %}
+                            <a href="{Велосипед}">Велосипед</a>
+                          {% endif %}
+                          {% if hobby == 'Бег' %}
+                            <a class="selected-age" href="{Бег}">Бег</a>
+                          {% else %}
+                            <a href="{Бег}">Бег</a>
+                          {% endif %}
+                          {% if hobby == 'Выгул с собакой' %}
+                            <a class="selected-age" href="{Выгул с собакой}">Выгул с собакой</a>
+                          {% else %}
+                            <a href="{Выгул с собакой}">Выгул с собакой</a>
+                          {% endif %}
+                          {% if hobby == 'Мама с ребенком' %}
+                            <a class="selected-age" href="{Мама с ребенком}">Мама с ребенком</a>
+                          {% else %}
+                            <a href="{Мама с ребенком}">Мама с ребенком</a>
+                          {% endif %}
+                          {% if hobby == 'Другое' %}
+                            <a class="selected-age" href="{Другое}">Другое</a>
+                          {% else %}
+                            <a href="{Другое}">Другое</a>
+                          {% endif %}
                       {% else %}
-                        <a href="{Велосипед}">Велосипед</a>
-                      {% endif %}
-                      {% if hobby == 'Бег' %}
-                        <a class="selected-age" href="{Бег}">Бег</a>
-                      {% else %}
-                        <a href="{Бег}">Бег</a>
-                      {% endif %}
-                      {% if hobby == 'Выгул с собакой' %}
-                        <a class="selected-age" href="{Выгул с собакой}">Выгул с собакой</a>
-                      {% else %}
-                        <a href="{Выгул с собакой}">Выгул с собакой</a>
-                      {% endif %}
-                      {% if hobby == 'Мама с ребенком' %}
-                        <a class="selected-age" href="{Мама с ребенком}">Мама с ребенком</a>
-                      {% else %}
-                        <a href="{Мама с ребенком}">Мама с ребенком</a>
-                      {% endif %}
-                      {% if hobby == 'Другое' %}
-                        <a class="selected-age" href="{Другое}">Другое</a>
-                      {% else %}
-                        <a href="{Другое}">Другое</a>
+                          {% if hobby == 'Велосипед' %}
+                            <a class="selected-age" href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Велосипед' %}">Велосипед</a>
+                          {% else %}
+                            <a href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Велосипед' %}">Велосипед</a>
+                          {% endif %}
+                          {% if hobby == 'Бег' %}
+                            <a class="selected-age" href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Бег' %}">Бег</a>
+                          {% else %}
+                            <a href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Бег' %}">Бег</a>
+                          {% endif %}
+                          {% if hobby == 'Выгул с собакой' %}
+                            <a class="selected-age" href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Выгул с собакой' %}">Выгул с собакой</a>
+                          {% else %}
+                            <a href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Выгул с собакой' %}">Выгул с собакой</a>
+                          {% endif %}
+                          {% if hobby == 'Мама с ребенком' %}
+                            <a class="selected-age" href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Мама с ребенком' %}">Мама с ребенком</a>
+                          {% else %}
+                            <a href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Мама с ребенком' %}">Мама с ребенком</a>
+                          {% endif %}
+                          {% if hobby == 'Другое' %}
+                            <a class="selected-age" href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Другое' %}">Другое</a>
+                          {% else %}
+                            <a href="{% url 'filter_hobby_age_gender' gender_id=gender_selected age=age hobby='Другое' %}">Другое</a>
+                          {% endif %}
                       {% endif %}
                   </div>
              </div>
+             <ul class = "ul-content">
+
              {% if user.username == 'root' or user.username == 'moderator' %}
                 <form action="{% url 'find_bad_content' %}" method="post">
                     {% csrf_token %}
